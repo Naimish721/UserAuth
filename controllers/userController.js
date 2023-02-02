@@ -8,10 +8,12 @@ exports.userList = async (req, res) => {
 exports.userAdd = async (req, res) => {
   try {
     // console.log(req.body);
-    const data = await Users.create(req.body);
-    res.status(200).send(data);
+    const data = new Users(req.body);
+    const datas = await data.save();
+    let myToken = await data.getAuthToken();
+    res.status(200).send({message:'ok',token:myToken});
   } catch (e) {
     res.status(400).send(e);
-    // console.log(e);
+    console.log(e);
   }
 };
