@@ -11,7 +11,7 @@ exports.userAdd = async (req, res) => {
     const data = new Users(req.body);
     await data.save();
     let myToken = await data.getAuthToken();
-    res.status(200).send({message:'ok',token:myToken});
+    res.status(200).send({ message: "ok", token: myToken });
   } catch (e) {
     res.status(400).send(e);
     console.log(e);

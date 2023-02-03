@@ -22,30 +22,31 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   },
   {
-    tokens: [
+    token: [
       {
-        token: {
+        tokens: {
           type: String,
-          required: true,
+          require: true,
         },
       },
     ],
   }
 );
-
 userSchema.pre("save", function (next) {
   var salt = bcrypt.genSaltSync(10);
   this.password = bcrypt.hashSync(this.password, salt);
   next();
 });
-userSchema.methods.getAuthToken = async (data) => {
+userSchema.methods.getAuthToken = async function (data) {
   let params = {
     id: this._id,
     email: this.email,
     phone: this.phone,
   };
   var tokenValue = jwt.sign(params, process.env.SECREATKEY);
-  this.tokens = this.tokens.concat({ token: tokenValue });
+  // console.log(tokenValue);
+  this.tokens = this.tokens.concat(tokenValue);
+  // console.log(this.tokens);
   await this.save();
   return tokenValue;
 };
