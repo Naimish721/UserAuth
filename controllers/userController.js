@@ -9,7 +9,7 @@ exports.userAdd = async (req, res) => {
   try {
     // console.log(req.body);
     const data = new Users(req.body);
-    const datas = await data.save();
+    await data.save();
     let myToken = await data.getAuthToken();
     res.status(200).send({message:'ok',token:myToken});
   } catch (e) {
