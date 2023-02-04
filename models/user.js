@@ -16,7 +16,6 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      select: false,
     },
   },
   {
@@ -26,7 +25,7 @@ const userSchema = mongoose.Schema(
     tokens: [
       {
         token: {
-          type: String, 
+          type: String,
           required: true,
         },
       },
