@@ -5,11 +5,12 @@ const otpSchema = mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: [true,"otp already send,please check your email"]
+      unique: [true, "otp already send,please check your email"],
     },
     code: {
       type: String,
       unique: true,
+      // expiresIn,
     },
   },
   {
