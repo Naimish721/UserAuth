@@ -33,21 +33,21 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.methods.getAuthToken = async function (data) {
-  try {
-    const token = jwt.sign({ _id: this._id.toString() }, SECREATKEY);
-    this.tokens = this.tokens.concat({ token });
-    await this.save();
-    return token;
-  } catch (e) {
-    console.log(e);
-  }
-};
+// userSchema.methods.getAuthToken = async function (data) {
+//   try {
+//     const token = jwt.sign({ _id: this._id.toString() }, SECREATKEY);
+//     this.tokens = this.tokens.concat({ token });
+//     await this.save();
+//     return token;
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 userSchema.pre("save", function (next) {
   var salt = bcrypt.genSaltSync(10);
   this.password = bcrypt.hashSync(this.password, salt);
   next();
 });
 
-const user = mongoose.model("USER", userSchema);
+const user = mongoose.model("custom", userSchema);
 module.exports = user;

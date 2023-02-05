@@ -11,6 +11,9 @@ router.get("/", (req, res) => {
 router.post("/add", userController.userAdd);
 router.get("/list", userController.userList);
 
-router.post("/login",userController.userLogin)
+router.post("/login", userController.userLogin);
+
+router.post("/email-send", userController.emailSend);
+router.post("/otp-verify", userController.otpVerify);
 
 module.exports = router;
