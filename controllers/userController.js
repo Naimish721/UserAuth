@@ -62,15 +62,25 @@ exports.emailSend = async (req, res) => {
   const data = await Customs.findOne({ email: req.body.email });
   const response = {};
   if (data) {
-    const otpcode = Math.floor(Math.random() * 10000 + 1);
-    const otpdata = Otp({
+    const check = await Otp.findOne({email:req.body.email});
+    if(check)
+    {
+      mailer(req.body.email, check.code);
+      response.statusText = "Success";
+      response.message = "Please check your email";
+    }
+    else
+    {
+      const otpcode = Math.floor(Math.random() * 10000 + 1);
+      const otpdata = Otp({
       email: req.body.email,
       code: otpcode,
     });
-    await otpdata.save();
-    mailer(req.body.email, otpcode);
-    response.statusText = "Success";
-    response.message = "Please check your email";
+      await otpdata.save();
+      mailer(req.body.email, otpcode);
+      response.statusText = "Success";
+      response.message = "Please check your email";
+    }
   } else {
     response.statusText = "error";
     response.message = "Email not registered";
